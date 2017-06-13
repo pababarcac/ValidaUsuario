@@ -11,19 +11,19 @@ and open the template in the editor.
 
 <html>
     <head>
-        <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+        <script src="<?=URL?>js/jquery-3.2.1.min.js" type="text/javascript"></script>
         <meta charset="UTF-8">
         <title></title>
     </head>
     <body>
-        <form id="frmusuario" action="<?php=URL?>/controlador/ValidaUsuario.php" method="post">
+        <form id="frmusuario" action="<?=URL?>controlador/ValidaUsuario.php" method="post">
             
             <div><label>Usuario:</label><input id="nomusuario" type="text" name="nomusuario" ></div>
             <div><label>Clave:</label><input id="clave" type="password" name="clave" ></div>
             <input id="enviar" type="button" onclick="" value="Enviar"> 
             <div id="mensaje"></div>
         </form>
-
+        <div id="info"></div>
     </body>
     <script>
     $(document).ready(function(){
@@ -33,12 +33,18 @@ and open the template in the editor.
         
                 if ($("#nomusuario").val()!="" && $("#clave").val()!=""){
                     ///*$("#frmusuario").submit();
-                        $.ajax({url:"controlador/ValidaUsuario.php"
+                        $.ajax({url:"<?=URL?>controlador/ValidaUsuario.php"
                             ,type:'post'
                             ,data:{'nomusuario':$("#nomusuario").val(),
                                 'clave':$("#clave").val()
                                 }
                             ,success:function(resultado){
+                                if(resultado=="Todo bien"){
+                                   $("#frmusuario").hide();
+                                   $("#mensaje").hide();
+                                   $("#info").show();
+                                   $("#info").html("El usuario logueado es :");
+                               }
                                 $("#mensaje").html(resultado);
                             }
                         });
